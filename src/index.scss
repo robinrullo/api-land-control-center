@@ -1,0 +1,14 @@
+@use 'carbon-components-react/scss/compat/themes' as compat;
+@use 'carbon-components-react/scss/themes';
+@use 'carbon-components-react/scss/theme'/* with (
+  $fallback: compat.$g100,
+  $theme: themes.$g100
+)*/;
+@use 'carbon-components-react/index';
+
+$font-prefix: 'node_modules/@ibm/plex';
+@import 'node_modules/@ibm/plex/scss/ibm-plex.scss';
+
+:root {
+  @include theme.theme();
+}
