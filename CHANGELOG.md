@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1](https://github.com/robinrullo/api-land-control-center/compare/v0.0.0...v0.0.1) (2023-01-06)
+
+
+### Bug Fixes
+
+* **home:** link to injections ([e14dce6](https://github.com/robinrullo/api-land-control-center/commit/e14dce606046999e7655a7b0ed6f5d29c1c50378))
+
 ## 0.0.0 (2023-01-06)
 
 
