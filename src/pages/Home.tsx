@@ -22,7 +22,7 @@ export const Home: FC = () => {
                     lg={{span: 6, offset: 8}}
             >
                 <ClickableTile onClick={() => {
-                    navigate(ELocation.SCRIPTS_LIST)
+                    navigate(ELocation.INJECTION_STATUS)
                 }}>
                     Injections
                 </ClickableTile>
