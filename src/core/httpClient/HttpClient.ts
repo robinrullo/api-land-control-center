@@ -17,10 +17,12 @@ export class HttpClient {
     }
 
     public static async post<T>(options: IRequestOptions): Promise<T> {
+        console.log('HttpClient.post', options)
         return this.fetcher<T>(HttpMethod.POST, {headers: {'Content-Type': 'application/json', ...options?.headers}, ...options});
     }
 
     public static async put<T>(options: IRequestOptions): Promise<T> {
+        console.log('HttpClient.post', options)
         return this.fetcher<T>(HttpMethod.PUT, {headers: {'Content-Type': 'application/json', ...options?.headers}, ...options});
     }
 
