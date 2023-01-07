@@ -1,5 +1,5 @@
 import {FC, useCallback, useEffect, useState} from "react";
-import {APIs} from "../const/api";
+import {APICollectionResource} from "../interfaces/api.interface";
 import {HttpClient} from "../core/httpClient/HttpClient";
 import {
     Button, InlineLoading,
@@ -10,38 +10,42 @@ import {
     TableToolbar,
     TableToolbarContent, Tag
 } from "carbon-components-react";
-import {API_LAND_URL, INJECTED_CHECK_REGEXP, WORKER_URL} from "../config";
+import {API_LAND_URL, INJECTED_CHECK_REGEXP, INJECTION_CHECK_INTERVAL, WORKER_URL} from "../config";
 
 
 export const InjectionStatus: FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
     const [status, setStatus] = useState<{ name: string, children: { name: string, status: boolean }[] }[]>([])
+    const [APICollections, setAPICollections] = useState<APICollectionResource[]>([])
 
     const isInjected = (res: string): boolean => res.search(INJECTED_CHECK_REGEXP) !== -1
 
-    const updateStatus = () => {
+    const updateStatus = (apis: APICollectionResource[]) => {
         setLoading(true)
-        return Promise.all(APIs.map(async api => ({
+        return Promise.all(apis.map(async api => ({
             name: api.name,
             children: await Promise.all(api.children.map(async child => ({
                 name: child.name,
                 status: await HttpClient.get({url: `${API_LAND_URL}/${api.path}/${child.path}`}).then((res) => isInjected(JSON.stringify(res)))
             })))
         })))
-            .then((value) => setStatus(value))
-            .finally(() => setLoading(false))
+        .then((value) => setStatus(value))
+        .finally(() => setLoading(false))
     }
 
     useEffect(() => {
-        updateStatus()
-        const updateInterval = setInterval(updateStatus, 30_000)
+        HttpClient.get<APICollectionResource[]>({url: `${WORKER_URL}/api/apis`}).then((res) => {
+            setAPICollections(res)
+            updateStatus(res)
+        })
+        const updateInterval = setInterval(() => updateStatus(APICollections), INJECTION_CHECK_INTERVAL)
         return () => clearInterval(updateInterval)
     }, [])
 
     const injectAll = useCallback(() => {
             setLoading(true)
             HttpClient.get({url: `${WORKER_URL}/api/inject/all`})
-                .then(() => updateStatus())
+            .then(() => updateStatus(APICollections))
         },
         [updateStatus]
     )
@@ -50,7 +54,7 @@ export const InjectionStatus: FC = () => {
             setLoading(true)
 
             HttpClient.get({url: `${WORKER_URL}/api/inject/resetAll`})
-                .then(() => updateStatus())
+            .then(() => updateStatus(APICollections))
         },
         [updateStatus]
     )
@@ -92,7 +96,6 @@ export const InjectionStatus: FC = () => {
                                     </Tag>
                                 </TableCell>
                             ))}
-
                         </TableRow>
                     ))}
                 </TableBody>
