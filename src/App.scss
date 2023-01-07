@@ -9,3 +9,24 @@
   top: 60px;
   right: 20px;
 }
+
+.nav-card .nav-content {
+  background: #f3f3f3;
+  padding: 16px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  height: 225px;
+  text-align: left;
+
+  .nav-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 680px) {
+  .nav-card .nav-content {
+    height: 350px;
+  }
+}

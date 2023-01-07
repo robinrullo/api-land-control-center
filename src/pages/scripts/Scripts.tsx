@@ -1,14 +1,14 @@
 import React, {FC, useCallback, useEffect, useState} from "react";
 import {Checkbox, Modal, Tag, TextInput} from "carbon-components-react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {ELocation} from "../components/Sidebar";
+import {ELocation} from "../../components/Sidebar";
 import {useForm} from "react-hook-form";
-import {HttpClient} from "../core/httpClient/HttpClient";
-import {IScript} from "../interfaces/script.interface";
-import {useToastContext} from "../hooks/useToastContext";
-import {ScriptsDataTable} from "../components/ScriptsDataTable";
-import {WORKER_URL} from "../config";
-import {Editor} from "../components/Editor";
+import {HttpClient} from "../../core/httpClient/HttpClient";
+import {IScript} from "../../interfaces/script.interface";
+import {useToastContext} from "../../hooks/useToastContext";
+import {ScriptsDataTable} from "../../components/ScriptsDataTable";
+import {WORKER_URL} from "../../config";
+import {Editor} from "../../components/Editor";
 import prettier from "prettier/standalone";
 import babelPlugin from "prettier/parser-babel";
 

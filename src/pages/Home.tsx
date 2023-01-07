@@ -1,30 +1,35 @@
 import {FC} from "react";
 import {ClickableTile, Column, Grid} from "carbon-components-react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {ELocation} from "../components/Sidebar";
 
 export const Home: FC = () => {
     const navigate = useNavigate()
     return (
-        <Grid>
-            <Column sm={{span: 6, offset: 0}}
-                    md={{span: 6, offset: 1}}
-                    lg={{span: 6, offset: 1}}
-            >
-                <ClickableTile onClick={() => {
+        <Grid fullWidth>
+            <Column sm={4} md={4} lg={6} className="nav-card">
+                <ClickableTile className="nav-content" onClick={() => {
                     navigate(ELocation.SCRIPTS_LIST)
                 }}>
-                    Scripts
+                    <h2 className="nav-title">Scripts</h2>
+                    <p className="nav-description">Here, you can CRUD the scripts and try them.</p>
                 </ClickableTile>
             </Column>
-            <Column sm={{span: 6, offset: 2}}
-                    md={{span: 6, offset: 5}}
-                    lg={{span: 6, offset: 8}}
-            >
-                <ClickableTile onClick={() => {
+            <Column sm={4} md={4} lg={6} className="nav-card">
+                <ClickableTile className="nav-content" onClick={() => {
                     navigate(ELocation.INJECTION_STATUS)
                 }}>
-                    Injections
+                    <h2 className="nav-title">Injections</h2>
+                    <p>There you make manage the XSS injections in the APIs. You can inject or reset
+                        all APIs and check if injection still in.</p>
+                </ClickableTile>
+            </Column>
+            <Column sm={4} md={4} lg={6} className="nav-card">
+                <ClickableTile className="nav-content" onClick={() => {
+                    navigate(ELocation.API_COLLECTIONS)
+                }}>
+                    <h2 className="nav-title">Collections</h2>
+                    <p>Here, you can CRUD the collections of APIs.</p>
                 </ClickableTile>
             </Column>
         </Grid>

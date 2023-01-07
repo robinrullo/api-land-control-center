@@ -1,8 +1,8 @@
 import {FC, useCallback, useEffect, useState} from "react";
-import {APICollectionResource} from "../interfaces/api.interface";
-import {HttpClient} from "../core/httpClient/HttpClient";
+import {APICollectionResource} from "../../interfaces/api.interface";
+import {HttpClient} from "../../core/httpClient/HttpClient";
 import {
-    Button, InlineLoading,
+    Button, DataTableSkeleton, InlineLoading,
     Table, TableBody, TableCell, TableContainer,
     TableHead,
     TableHeader,
@@ -10,12 +10,17 @@ import {
     TableToolbar,
     TableToolbarContent, Tag
 } from "carbon-components-react";
-import {API_LAND_URL, INJECTED_CHECK_REGEXP, INJECTION_CHECK_INTERVAL, WORKER_URL} from "../config";
+import {
+    API_LAND_URL,
+    INJECTED_CHECK_REGEXP,
+    INJECTION_CHECK_INTERVAL,
+    WORKER_URL
+} from "../../config";
 
 
 export const InjectionStatus: FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
-    const [status, setStatus] = useState<{ name: string, children: { name: string, status: boolean }[] }[]>([])
+    const [status, setStatus] = useState<{ name: string, children: { name: string, status: boolean }[] }[] | null>(null)
     const [APICollections, setAPICollections] = useState<APICollectionResource[]>([])
 
     const isInjected = (res: string): boolean => res.search(INJECTED_CHECK_REGEXP) !== -1
@@ -59,7 +64,8 @@ export const InjectionStatus: FC = () => {
         [updateStatus]
     )
 
-    const headers = ['Land', 'API 1', 'API 2']
+    const headers = ['Land', 'Collections']
+    if (!status && loading) return <DataTableSkeleton headers={headers.map(header => ({header}))}/>
     return (
         <TableContainer
             title="Injection status"
@@ -86,16 +92,17 @@ export const InjectionStatus: FC = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {status.map((s) => (
+                    {status?.map((s) => (
                         <TableRow key={s.name}>
                             <TableCell>{s.name}</TableCell>
-                            {s.children.map((child) => (
-                                <TableCell key={child.name}>
-                                    <Tag type={child.status ? 'green' : 'red'} size="md">
+                            <TableCell>
+                                {s.children.map((child) => (
+                                    <Tag key={child.name} type={child.status ? 'green' : 'red'}
+                                         size="md">
                                         {child.name}
                                     </Tag>
-                                </TableCell>
-                            ))}
+                                ))}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

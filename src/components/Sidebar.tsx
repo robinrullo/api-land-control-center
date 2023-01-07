@@ -8,7 +8,8 @@ export enum ELocation {
     NEW_SCRIPT = "/scripts/new",
     EDIT_SCRIPT = "/scripts/edit",
     DELETE_SCRIPT = "/scripts/delete",
-    INJECTION_STATUS = "/injection/status"
+    INJECTION_STATUS = "/injection/status",
+    API_COLLECTIONS = "/api/collections"
 }
 
 export const Sidebar: FC = () => {
@@ -49,6 +50,14 @@ export const Sidebar: FC = () => {
                         isActive={isActive(ELocation.INJECTION_STATUS)}
                     >
                         Injection Status
+                    </SideNavMenuItem>
+                    <SideNavMenuItem
+                        // @ts-ignore
+                        element={Link}
+                        to={ELocation.API_COLLECTIONS}
+                        isActive={isActive(ELocation.API_COLLECTIONS)}
+                    >
+                        Collections
                     </SideNavMenuItem>
                 </SideNavMenu>
             </SideNavItems>
