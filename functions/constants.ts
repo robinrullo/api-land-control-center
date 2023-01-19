@@ -13,4 +13,12 @@ export const CFP_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
  * Paths that don't require authentication.
  * The /cfp_login path must be included.
  */
-export const CFP_ALLOWED_PATHS = [/^\/cfp_login$/, /^#\/scripts$/, /^#\/injection\/status/, /^\/$/, /^\/assets\/.*/];
+export const CFP_ALLOWED_PATHS = [
+  // Core routes
+  /^\/cfp_login$/,
+  /^\/assets\/.*/,
+  // App specific routes
+  /^\/$/,
+  /^#\/scripts$/,
+  /^#\/injection\/status/,
+];
